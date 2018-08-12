@@ -1,0 +1,6 @@
+---
+# tasks file for common
+- include_vars: subnets.yml
+
+- { include: CreateVPC.yml }
+

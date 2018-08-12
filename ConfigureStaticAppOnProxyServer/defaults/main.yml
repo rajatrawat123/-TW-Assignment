@@ -1,0 +1,10 @@
+---
+# default vars for ConfigureStaticAppOnProxyServer
+web_server_ip_address: 0.0.0.0
+zipName: static.zip
+zipRemotePath: /usr/share/nginx/html
+destinationPath: /usr/share/nginx/html/static
+certificatePath: /root/certs/
+certificateKeyPath: /root/certs/
+certificateName: MyCertificate.crt
+certificateKeyName: MyKey.key

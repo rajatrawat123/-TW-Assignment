@@ -1,0 +1,5 @@
+---
+# vars file for ConfigureWebAppOnTomcatServer
+warName: companyNews.war
+tomcatInstallationPath: /opt/tomcat/apache-tomcat-8.5.32
+data_directory: /Users/dcameron/persistence

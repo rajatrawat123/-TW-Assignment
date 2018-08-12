@@ -1,0 +1,23 @@
+---
+#Install war file on tomcat server
+- name: Download WAR to server
+  command: wget https://s3.amazonaws.com/infra-assessment/companyNews.war -O "{{ tomcatInstallationPath }}"/webapps/"{{ warName }}"
+  notify:
+    - restart tomcat8
+
+#- name: Unzip WAR file
+ # unarchive: src="{{ tomcatInstallationPath }}"/"{{ warName }}" dest="{{ tomcatInstallationPath }}"/webapps/companyNews/ copy=no mode=0755 owner=tomcat group=tomcat
+  #notify:
+   # - restart tomcat8
+
+- name: Delete remote war file
+  file: path="{{ tomcatInstallationPath }}"/"{{ warName }}" state=absent
+
+
+- name: Create data directory
+  file:
+    path: "{{ data_directory }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+    mode: 0755

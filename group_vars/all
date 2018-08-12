@@ -1,0 +1,18 @@
+---
+# vars file for this group
+aws_access_key: "<aws_access_key>"
+aws_secret_key: "<aws_secret_key"
+ec2_url: https://ec2.ap-south-1.amazonaws.com
+
+# VPC Information
+vpc_name: "My VPC"
+vpc_cidr_block: "10.0.0.0/16"
+aws_region: "ap-south-1"
+
+# For Security Group Rule
+my_ip: "0.0.0.0"
+
+# Subnets
+public_subnet_1_cidr: "10.0.0.0/24"
+private_subnet_1_cidr: "10.0.1.0/24"
+

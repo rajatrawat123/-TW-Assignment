@@ -1,0 +1,87 @@
+- name: "Gather facts about ec2 instance | {{ tag_name }}"
+  ec2_instance_facts:
+    region: "{{ aws_region }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    filters:
+      tag-key: "{{ tag_name }}"
+  register: ec2Details
+  
+- debug: msg="{{ ec2Details }}"
+
+- name: Set public ip and host id
+  set_fact:
+    my_ec2_public_ip: "{{ ec2Details.instances[0].public_ip_address}}"
+    my_ec2_id: "{{ ec2Details.instances[0].instance_id }}"
+  when: ec2Details.instances
+
+- name: Create an EC2 key
+  ec2_key:
+    name: "{{ key_name }}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{ aws_region }}"
+  register: ec2_key
+
+- name: save private key
+  copy:
+    content: "{{ ec2_key.key.private_key }}"
+    dest: "{{ keyFilePath }}"
+    mode: 0400
+  when: ec2_key.changed
+
+
+- name: create an EC2 instance
+  ec2:
+    key_name: "{{key_name}}"
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    region: "{{aws_region}}"
+    vpc_subnet_id: "{{ public_subnet_id }}"
+    group_id: "{{ main_sg_id }}"
+    instance_type: "{{instance_type}}"
+    image: "{{ami_id}}"
+    assign_public_ip: yes
+    volumes:
+      - device_name: /dev/sda1
+        volume_type: gp2
+        volume_size: 60
+    instance_tags: '{
+        "Name": "{{ tag_name }}",
+        "{{ tag_name }}": "yes"
+    }'
+    exact_count: 1
+    count_tag: "{{ tag_name }}"
+    user_data: ""
+    wait: true
+  when: not ec2Details.instances
+  register: my_ec2
+
+
+- name: Set public ip and host id
+  set_fact:
+    my_ec2_public_ip: "{{ my_ec2.instances[0].public_ip }}"
+    my_ec2_id: "{{ my_ec2.instances[0].id }}"
+  when: not ec2Details.instances
+
+- debug: msg="my_ec2_public_ip"
+- debug: msg="my_ec2_id"
+
+- name: Wait for SSH to come up
+  wait_for:
+    host: "{{ my_ec2_public_ip }}"
+    port: 22
+    state: started
+
+- name: Create SSH Group to login dynamically to EC2 Instance
+  add_host:
+    hostname: "{{ my_ec2_public_ip }}"
+    groupname: proxyserver
+    ansible_ssh_user: ubuntu
+    ansible_ssh_private_key_file: "{{ keyFilePath }}"
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Set proxy server public IP
+  set_fact:
+    proxy_server_public_ip: "{{ my_ec2_public_ip }}"
+

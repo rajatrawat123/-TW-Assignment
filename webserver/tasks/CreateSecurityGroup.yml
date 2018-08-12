@@ -1,0 +1,14 @@
+- name: "Security Group | {{ system_role }}"
+  ec2_group:
+    name: "{{ system_role }}"
+    description: "Security Group for {{ system_role }}"
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ aws_region }}" 
+    aws_access_key: "{{ aws_access_key }}"
+    aws_secret_key: "{{ aws_secret_key }}"
+    rules: "{{ security_group[system_role].rules }}"
+  register: my_sg
+
+- name: Set Main SG ID
+  set_fact:
+    main_sg_id: "{{ my_sg.group_id }}"

@@ -1,0 +1,6 @@
+---
+subnets:
+  - cidr: "{{ public_subnet_1_cidr }}"
+    az: "{{ aws_region }}a"
+  - cidr: "{{ private_subnet_1_cidr }}"
+    az: "{{ aws_region }}b"

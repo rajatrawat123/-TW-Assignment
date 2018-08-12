@@ -1,0 +1,16 @@
+---
+# tasks file for ConfigureWebAppOnTomcatServer
+- name: installing repo for Java 8 in Ubuntu
+  apt_repository: repo='ppa:openjdk-r/ppa'
+
+- include_role:
+    name: geerlingguy.java
+  vars:
+    java_packages: openjdk-8-jdk
+
+- include_role:
+    name: flxpeters.tomcat8
+  vars:
+    tomcat_java_home: /usr/lib/jvm/java-8-openjdk-amd64
+
+- include: InstallWebApp.yml

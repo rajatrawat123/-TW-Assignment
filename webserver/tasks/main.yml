@@ -1,0 +1,14 @@
+---
+# tasks file for webserver
+- include_vars: security-groups.yml
+- include_vars: instances.yml
+
+
+- include: CreateSecurityGroup.yml
+  vars:
+    system_role: webserver
+- include: CreateInstance.yml
+  vars:
+    tag_name: "{{ web_server_name }}"
+
+

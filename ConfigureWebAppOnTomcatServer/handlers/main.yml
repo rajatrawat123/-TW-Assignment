@@ -1,0 +1,5 @@
+---
+# handlers file for ConfigureWebAppOnTomcatServer
+- name: restart tomcat8
+  service: name=tomcat state=restarted
+

@@ -1,0 +1,34 @@
+---
+- hosts: localhost
+  tasks:
+  - include_role:
+      name: common
+
+  - include_role:
+      name: proxyserver
+    vars:
+      proxy_server_name: TestProxyServer
+
+  - include_role:
+      name: webserver
+    vars:
+      web_server_name: TestWebServer
+
+- name: Install and Configure Web application on Tomcat server
+  hosts: webserver
+  become: yes
+  tasks:
+    - include_role:
+        name: ConfigureWebAppOnTomcatServer
+
+- name: Install and configure nginx proxy with static content
+  hosts: proxyserver
+  become: yes
+  tasks:
+    - include_role:
+        name: ConfigureStaticAppOnProxyServer
+      vars:
+        web_server_ip_address: "{{ hostvars['localhost']['web_server_public_ip'] }}"
+
+
+

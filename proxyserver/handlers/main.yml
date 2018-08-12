@@ -1,0 +1,4 @@
+---
+# handlers file for proxy server
+- name: reload nginx
+  service: name=nginx state=reloaded

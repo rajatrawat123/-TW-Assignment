@@ -1,0 +1,5 @@
+---
+# defaults file for proxyserver
+proxy_server_name: "proxyServer1"
+key_name: "proxyServerKey"
+keyFilePath: "./proxyServerKey.pem"

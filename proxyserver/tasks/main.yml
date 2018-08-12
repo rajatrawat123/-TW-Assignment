@@ -1,0 +1,15 @@
+---
+# tasks file for proxy server
+- include_vars: security-groups.yml
+- include_vars: instances.yml
+
+
+- include: CreateSecurityGroup.yml
+  vars:
+    system_role: proxyserver
+- include: CreateInstance.yml
+  vars:
+    tag_name: "{{ proxy_server_name }}"
+
+
+
