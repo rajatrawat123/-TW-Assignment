@@ -3,7 +3,7 @@
 # Problem Statement
 A development team has created a Java web application that is ready for a limited release (with reduced availability and reliability requirements - till we get to production). If the limited release is successful, the app will be rolled out for worldwide use. Once fully public, the application needs to be available 24/7 and must provide sub-second response times and continuity through single server failures - targeting 4-9’s availability.
 
-<img alt="ALT test" src="UAT.png">
+![UAT Solution](images/Prod.PNGm "UAT Solution")
 
 # Solution Overview
 
@@ -21,4 +21,4 @@ Self-signed certificates are used to ensure that the connection to Nginx server 
 
 Once the script execution is complete(approx. 6-8 mins), we will be able to access the companyNews blog at https://<proxy_server_public_ip>.
 
-![alt text](images/Prod.png "Production Solution")
+![Production Solution](images/Prod.PNGm "Production Solution")
