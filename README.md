@@ -3,7 +3,7 @@
 # Problem Statement
 A development team has created a Java web application that is ready for a limited release (with reduced availability and reliability requirements - till we get to production). If the limited release is successful, the app will be rolled out for worldwide use. Once fully public, the application needs to be available 24/7 and must provide sub-second response times and continuity through single server failures - targeting 4-9’s availability.
 
-![alt text](images/UAT.png "UAT Solution")
+<img alt="ALT test" src="UAT.png">
 
 # Solution Overview
 
