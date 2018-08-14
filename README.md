@@ -21,4 +21,6 @@ Self-signed certificates are used to ensure that the connection to Nginx server 
 
 Once the script execution is complete(approx. 6-8 mins), we will be able to access the companyNews blog at https://<proxy_server_public_ip>.
 
+# Proposed Solution for Production
+
 ![](images/Prod.PNG)
